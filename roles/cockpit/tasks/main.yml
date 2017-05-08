@@ -1,7 +1,8 @@
 ---
 - name: Install cockpit-ws
-  package: name={{ item }} state=present
-  with_items:
+  package: name={{ cockpit_pkgs | join (',') }} state=present
+  vars:
+    cockpit_pkgs:
     - cockpit-ws
     - cockpit-shell
     - cockpit-bridge

@@ -15,8 +15,9 @@
   when: task_result | changed
 
 - name: Install iptables packages
-  package: name={{ item }} state=present
-  with_items:
+  package: name={{ iptables_pkgs | join(',') }} state=present
+  vars:
+    iptables_pkgs:
     - iptables
     - iptables-services
   when: not openshift.common.is_atomic | bool
