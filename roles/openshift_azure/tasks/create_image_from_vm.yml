@@ -1,4 +1,35 @@
 ---
+- name: "set waagent.conf values for Provisioning.Enabled"
+  replace:
+    path: /etc/waagent.conf
+    regexp: 'Provisioning\.Enabled=y'
+    replace: 'Provisioning.Enabled=n'
+
+- name: "set waagent.conf values for Provisioning.UseCloudInit"
+  replace:
+    path: /etc/waagent.conf
+    regexp: 'Provisioning\.UseCloudInit=n'
+    replace: 'Provisioning.UseCloudInit=y'
+
+- name: "set waagent.conf values for ResourceDisk.Format"
+  replace:
+    path: /etc/waagent.conf
+    regexp: 'ResourceDisk\.Format=y'
+    replace: 'ResourceDisk.Format=n'
+
+- name: "set waagent.conf values for ResourceDisk.EnableSwap"
+  replace:
+    path: /etc/waagent.conf
+    regexp: 'ResourceDisk\.EnableSwap=y'
+    replace: 'ResourceDisk.EnableSwap=n'
+
+- name: "create /etc/cloud/cloud.cfg.d/91-azure_datasource.cfg"
+  copy:
+    content: "datasource_list: [ Azure ]"
+    dest: /etc/cloud/cloud.cfg.d/91-azure_datasource.cfg
+    backup: yes
+
+
 - name: call to waagent to deprovision vm
   shell: sleep 2 && /usr/sbin/waagent -deprovision+user -force
   async: 1
